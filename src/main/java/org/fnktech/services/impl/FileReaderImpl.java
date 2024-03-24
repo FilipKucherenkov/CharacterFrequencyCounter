@@ -27,13 +27,11 @@ public class FileReaderImpl implements FileReader {
     }
     private TxtFile buildTxtFile(Path path){
         LOGGER.info(String.format("Attempting to read file [path=%s]", path));
-        TxtFile txtFile = new TxtFile();
         try {
-            txtFile.setContent(Files.readAllLines(path, StandardCharsets.UTF_8));
-            return txtFile;
+            return new TxtFile(Files.readAllLines(path, StandardCharsets.UTF_8));
         }catch (Exception e){
             LOGGER.warning(String.format("Could not read file [path=%s]", path));
-            return txtFile;
+            return new TxtFile(List.of());
         }
     }
     private void validatePath(Path path) throws Exception {

@@ -14,7 +14,7 @@ public class Main {
         List<TxtFile> lst = fileReader.readFiles(testDirecotory);
 
         lst.forEach(file -> {
-            file.getContent().forEach(System.out::println);
+            file.content().forEach(System.out::println);
             System.out.println();
         });
     }
