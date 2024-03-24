@@ -26,19 +26,19 @@ public class FileReaderImpl implements FileReader {
         }
     }
     private TxtFile buildTxtFile(Path path){
-        LOGGER.info(String.format("Attempting to read file [path=%s]", path));
+        LOGGER.info(STR."Attempting to read file [path=\{path}]");
         try {
             return new TxtFile(Files.readAllLines(path, StandardCharsets.UTF_8));
         }catch (Exception e){
-            LOGGER.warning(String.format("Could not read file [path=%s]", path));
+            LOGGER.warning(STR."Could not read file [path=\{path}]");
             return new TxtFile(List.of());
         }
     }
     private void validatePath(Path path) throws Exception {
         if(!Files.exists(path)){
-            throw new Exception(String.format("The provided path is invalid [path=%s]", path));
+            throw new Exception(STR."The provided path is invalid [path=\{path}]");
         }else if(!Files.isDirectory(path)){
-            throw new Exception(String.format("The provided path is not a directory [path=%s]", path));
+            throw new Exception(STR."The provided path is not a directory [path=\{path}]");
         }
     }
 }
