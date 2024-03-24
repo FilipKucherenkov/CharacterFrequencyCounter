@@ -2,24 +2,23 @@ package org.fnktech;
 
 import org.fnktech.model.TxtFile;
 import org.fnktech.services.FileReader;
+import org.fnktech.services.FrequencyCounter;
+import org.fnktech.services.impl.CharacterFrequencyCounter;
 import org.fnktech.services.impl.FileReaderImpl;
 
 import java.nio.file.Path;
 import java.util.List;
+import java.util.Map;
 
 public class Main {
     public static void main(String[] args) throws Exception {
-        Path testDirectory = Path.of("/Users/filipkucherenkov/Desktop/test_files");
+        Path testDirectory = Path.of(args[0]);
         FileReader fileReader = new FileReaderImpl();
-        List<TxtFile> lst = fileReader.readFiles(testDirectory);
+        List<TxtFile> files = fileReader.readFiles(testDirectory);
 
-        lst.forEach(file -> {
-            file.content().forEach(System.out::println);
-            System.out.println();
-        });
-
-        //TODO: 1. Process each file's content in a different thread
-        //      2. Calculate character frequency in each file
-        //      3. Combine the results and output the character with the maximum frequency
+        FrequencyCounter<Character> characterFrequencyCounter = new CharacterFrequencyCounter(files);
+        for(Map.Entry<Character, Integer> entry : characterFrequencyCounter.findTheMostFrequentElements().entrySet()){
+            System.out.println(STR."\{entry.getKey()}: \{entry.getValue()}");
+        };
     }
 }

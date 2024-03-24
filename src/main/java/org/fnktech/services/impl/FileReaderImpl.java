@@ -18,6 +18,7 @@ public class FileReaderImpl implements FileReader {
             return Files.walk(path)
                     .filter(Files::isRegularFile)
                     .filter(filePath -> !filePath.endsWith(".txt"))
+                    .parallel()
                     .map(this::buildTxtFile)
                     .toList();
         }catch (Exception e){
@@ -27,7 +28,7 @@ public class FileReaderImpl implements FileReader {
     }
 
     private TxtFile buildTxtFile(Path path){
-        // TODO: Multi Thread this
+        LOGGER.info(STR."Building txt file while running in \{Thread.currentThread().getName()}");
         LOGGER.info(STR."Attempting to read file [path=\{path}]");
         try {
             return new TxtFile(Files.readAllLines(path, StandardCharsets.UTF_8));
