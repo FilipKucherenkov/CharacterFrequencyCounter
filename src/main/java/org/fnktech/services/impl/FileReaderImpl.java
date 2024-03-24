@@ -25,7 +25,9 @@ public class FileReaderImpl implements FileReader {
             return List.of();
         }
     }
+
     private TxtFile buildTxtFile(Path path){
+        // TODO: Multi Thread this
         LOGGER.info(STR."Attempting to read file [path=\{path}]");
         try {
             return new TxtFile(Files.readAllLines(path, StandardCharsets.UTF_8));
